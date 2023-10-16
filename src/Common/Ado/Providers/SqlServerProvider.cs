@@ -37,7 +37,7 @@ namespace datatablegenerator.Common.Ado.Providers
                     // 欢迎大家指点 ^-^
                     string name = item.Name;
                     string type = item.Type;
-                    string required = item.Required == true ? "not null " : " ";
+                    string required = item.Required == true ? "NOT NULL " : " ";
 
                     if (!string.IsNullOrWhiteSpace(item.Constraint))
                     {
@@ -106,7 +106,7 @@ namespace datatablegenerator.Common.Ado.Providers
             {
                 return FuncResult.Fail("创建数据表失败！");
             }
-            //await CreateTable(result.Data);
+            Log<SqlServerProvider>.Debug($"创建表SQL：\r\n {isok.Data}");
             return FuncResult.Success();
         }
 

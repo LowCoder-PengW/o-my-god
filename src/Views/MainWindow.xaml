@@ -38,8 +38,8 @@
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
-                    <RadioButton Grid.Column="0" Name="MSSQL" GroupName="DB" Content="MSSQL" IsChecked="{Binding _DBCheckModel.IsMSSQL}" VerticalAlignment="Center"/>
-                    <RadioButton Grid.Column="1" Name="MySQL" GroupName="DB" Content="MySQL" IsChecked="{Binding _DBCheckModel.IsMySQL}" VerticalAlignment="Center"/>
+                    <RadioButton Grid.Column="0" Name="MSSQL" GroupName="DB" Command="{Binding DBCheckCommand}" Content="MSSQL" IsChecked="{Binding _DBCheckModel.IsMSSQL}" VerticalAlignment="Center"/>
+                    <RadioButton Grid.Column="1" Name="MySQL" GroupName="DB" Command="{Binding DBCheckCommand}" Content="MySQL" IsChecked="{Binding _DBCheckModel.IsMySQL}" VerticalAlignment="Center"/>
                 </Grid>
 
 
@@ -50,7 +50,7 @@
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
                     <Label Grid.Column="0" Content="名 称: " VerticalAlignment="Center"/>
-                    <Label Name="DBName" Content="{Binding _ConnectModel.DBName, Mode=TwoWay}" Grid.Column="1" VerticalAlignment="Center"></Label>
+                    <Label Name="DBName" FontSize="18" Content="{Binding _ConnectModel.DBName, Mode=TwoWay}" Grid.Column="1" VerticalAlignment="Center"></Label>
                     <Label Name="StateTxt" FontSize="16" Grid.Column="2" Foreground="{Binding _ConnectModel.ConnectStatusForeground,Mode=TwoWay}"  Content="{Binding _ConnectModel.ConnectStatusText,Mode =TwoWay}" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,30,0"/>
                 </Grid>
 

@@ -90,7 +90,7 @@ namespace datatablegenerator.Common.Ado
                         dbCommand.CommandType = CommandType.Text;
                         var result = await dbCommand.ExecuteScalarAsync();
 
-                        if (!string.IsNullOrWhiteSpace(result.ToString()))
+                        if (!string.IsNullOrWhiteSpace(result?.ToString()))
                         {
                             return FuncResult.Fail("该表名已存在！");
                         }
@@ -126,7 +126,7 @@ namespace datatablegenerator.Common.Ado
             }
             catch (Exception ex)
             {
-                Log<AdoProviderBase>.Error($"创建数据表报错！{ex.Message};堆栈：{ex.StackTrace}");
+                Log<AdoProviderBase>.Error($"创建数据表报错！SQL :{sql};{ex.Message};堆栈：{ex.StackTrace}");
                 return FuncResult.Fail<int>($"{ex.Message}");
             }
         }

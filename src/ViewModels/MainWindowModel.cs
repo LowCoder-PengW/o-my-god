@@ -81,7 +81,7 @@ namespace datatablegenerator.ViewModels
         /// <returns></returns>
         private string GetDatabaseName(string connTxt)
         {
-            return connTxt.Split(";").ToList().TakeLast(2).First().Split("=").ToList().TakeLast(1).First();
+            return connTxt.Split(";").ToList().TakeLast(1).First().Split("=").ToList().TakeLast(1).First();
         }
         /// <summary>
         /// 修改连接状态
@@ -117,7 +117,7 @@ namespace datatablegenerator.ViewModels
             if (_DBCheckModel.IsMSSQL)
             {
                 _ConnectModel.DataSourceType = DataSourceType.MSSQL;
-                return _ConnectModel.ConnectionString + ";trustServerCertificate=true";
+                return _ConnectModel.ConnectionString;
             }
             return _ConnectModel.ConnectionString;
         }
@@ -239,7 +239,7 @@ namespace datatablegenerator.ViewModels
         #endregion
 
 
-        #region
+        #region 生成表
 
         /// <summary>
         /// 确认提交
@@ -292,6 +292,34 @@ namespace datatablegenerator.ViewModels
         }
 
         #endregion
+
+
+        #region 选择数据库
+
+        private ICommand? _DBCheckCommand;
+        public ICommand? DBCheckCommand
+        {
+            get
+            {
+                return _DBCheckCommand ?? (_DBCheckCommand = new RelayCommand<object>(CheckDB));
+            }
+        }
+
+        public void CheckDB(object parameter)
+        {
+            if (_DBCheckModel.IsMySQL)
+            {
+                _ConnectModel.DBName = "**********MySQL**********";
+            }
+            if (_DBCheckModel.IsMSSQL)
+            {
+                _ConnectModel.DBName = "Microsoft ® SQL Server";
+            }
+        }
+
+        #endregion
+
+
 
 
         #region
