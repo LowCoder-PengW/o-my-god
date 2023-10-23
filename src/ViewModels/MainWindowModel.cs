@@ -272,7 +272,7 @@ namespace datatablegenerator.ViewModels
                 MessageBox.Show($"请先输入表名！", "提示", MessageBoxButton.OK, MessageBoxImage.Exclamation);
                 return;
             }
-            var isExist = await _adoProvider.ExistTable(tableName);
+            var isExist = await _adoProvider.IsTableExist(tableName);
             if (isExist)
             {
                 MessageBox.Show($"该数据表:{tableName}已存在！", "提示", MessageBoxButton.OK, MessageBoxImage.Exclamation);
@@ -318,8 +318,6 @@ namespace datatablegenerator.ViewModels
         }
 
         #endregion
-
-
 
 
         #region
