@@ -37,7 +37,7 @@ namespace datatablegenerator.Common.Ado.Providers
                     // 欢迎大家指点 ^-^
                     string name = item.Name;
                     string type = item.Type;
-                    string required = item.Required == true ? "not null " : " ";
+                    string required = item.Required == true ? "NOT NULL " : " ";
 
                     if (!string.IsNullOrWhiteSpace(item.Constraint))
                     {
@@ -66,50 +66,19 @@ namespace datatablegenerator.Common.Ado.Providers
         }
 
         /// <summary>
-        /// 是否存在该表
+        /// 成功要求
         /// </summary>
-        /// <param name="tableName"></param>
+        /// <param name="index"></param>
         /// <returns></returns>
-        public override async Task<FuncResult> ExistTable(string tableName)
+        /// <exception cref="NotImplementedException"></exception>
+        protected override bool SuccessRequire(int index)
         {
-            string sql = $"SELECT OBJECT_ID(N'{tableName}',N'U')";
-            var result = await IsTableExist(sql);
-            if (!result)
-            {
-                return FuncResult.Success();
-            }
-            return FuncResult.Fail(result.Message);
+            return index == -1;
         }
 
-        /// <summary>
-        /// 生成表
-        /// </summary>
-        /// <param name="db"></param>
-        /// <param name="dt"></param>
-        /// <param name="models"></param>
-        /// <returns></returns>
-        public override async Task<FuncResult> GeneraterTable(string db, string dt, IEnumerable<TableModel> models)
+        protected override string ShowSQL(string tableName)
         {
-            var result = CreateTableSQL(db, dt, models);
-            if (!result)
-            {
-                return FuncResult.Fail(result.Message);
-            }
-
-            var isok = await ExecuteNonQueryAsync(result.Data);
-            if (!isok)
-            {
-                return FuncResult.Fail(isok.Message);
-            }
-
-            if (isok.Data != -1)
-            {
-                return FuncResult.Fail("创建数据表失败！");
-            }
-            //await CreateTable(result.Data);
-            return FuncResult.Success();
+            return $"SELECT OBJECT_ID(N'{tableName}',N'U')";
         }
-
-
     }
 }
