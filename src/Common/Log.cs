@@ -15,6 +15,11 @@ namespace datatablegenerator.Common
         {
             logger.Debug(message);
         }
+        public static void Info(object message)
+        {
+            logger.Info(message);
+        }
+
 
         public static void Error(object message)
         {
