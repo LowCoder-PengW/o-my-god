@@ -68,6 +68,7 @@ namespace datatablegenerator.Common.Ado
             {
                 return FuncResult.Fail("不符合成功要求！");
             }
+            Log<AdoProviderBase>.Info(result.Data);
             return FuncResult.Success();
         }
 
@@ -103,7 +104,7 @@ namespace datatablegenerator.Common.Ado
         {
             var sql = ShowSQL(tableName);
             var result = await ExecuteNonQueryAsync(sql);
-            if (!result)
+            if (!result || result.Data == -1)
             {
                 return FuncResult.Fail(result.Message);
             }
