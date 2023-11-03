@@ -1,7 +1,6 @@
-﻿using datatablegenerator.Models;
-using datatablegenerator.ViewModels;
+﻿using datatablegenerator.Common;
+using datatablegenerator.Models;
 using Microsoft.Data.SqlClient;
-using Microsoft.Identity.Client;
 using System;
 using System.Collections.Generic;
 using System.Data.Common;
@@ -9,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace datatablegenerator.Common.Ado.Providers
+namespace datatablegenerator.DataAccess.Ado.Providers
 {
     public class SqlServerProvider : AdoProviderBase
     {
@@ -57,7 +56,7 @@ namespace datatablegenerator.Common.Ado.Providers
                 }
                 catch (Exception ex)
                 {
-                    Log<MainWindowModel>.Error($"创建数据表SQL,错误消息：{ex.Message};堆栈：{ex.StackTrace}");
+                    Log<SqlServerProvider>.Error($"创建数据表SQL,错误消息：{ex.Message};堆栈：{ex.StackTrace}");
                     return FuncResult.Fail<string>(ex.Message);
                 }
             }

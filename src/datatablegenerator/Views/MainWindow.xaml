@@ -78,8 +78,8 @@
             </Grid>
         </GroupBox>
 
-        <TabControl Grid.Row="1" >
-            <TabItem Header="Execl模板解析" Width="100" Height="20">
+        <TabControl Name="tabControl" Grid.Row="1" >
+            <TabItem Header="Execl模板解析-v1.0" Width="120" Height="20">
                 <Grid Background="#FFE5E5E5">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="3*"/>
@@ -120,6 +120,59 @@
                     <Button Grid.Row="3" Name="Commit" Content="确    认"  Command="{Binding SubmitCommand}" CommandParameter="{Binding ElementName=RichTextBox}" VerticalAlignment="Center" HorizontalAlignment="Right" Width="100" Height="40" Margin="0,0,10,0" FontSize="18" />
                 </Grid>
 
+
+            </TabItem>
+
+            <TabItem Header="Execl模版解析-v2.0" Width="120">
+
+                <Grid Background="#FFE5E5E5">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="8*"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Grid Grid.Row="0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="8*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <DockPanel Grid.Column="0" Margin="10">
+                            <Button Name="btnOpenFile" Height="30"  Command="{Binding OpenFileCommand}">选择文件</Button>
+                        </DockPanel>
+                        <DockPanel  Grid.Column="1"  Margin="10" VerticalAlignment="Center">
+                            <Label Content="文件地址： " FontWeight="Bold" ></Label>
+                            <Label Content="{Binding _ExcelTemplateModel.ExcelPathName,Mode=TwoWay}" FontStyle="Oblique" Name="execlPathName"></Label>
+                        </DockPanel>
+                        <DockPanel  Grid.Column="2"  Margin="10">
+                            <Button Name="Analysis2" Height="30" CommandParameter="{Binding ElementName=tabControl}"  Command="{Binding ExcelPathAnalysisCommand}">解析文件</Button>
+                        </DockPanel>
+                    </Grid>
+
+                    <Grid Grid.Row="1" >
+                        <DataGrid Grid.Row="1" x:Name="TableDataGrid2" ItemsSource="{Binding TableModelList}" VerticalScrollBarVisibility="Auto"   AlternatingRowBackground="White"
+                          HorizontalContentAlignment="Center" SelectionUnit="FullRow" HeadersVisibility="Column" AllowDrop="True"
+                          AutoGenerateColumns="False" IsHitTestVisible="True" CanUserAddRows="False" IsReadOnly="True" >
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="字段名称" Binding="{Binding Name,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"  Width="150" IsReadOnly="True"></DataGridTextColumn>
+                                <DataGridTextColumn Header="数据类型" Binding="{Binding Type,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"  Width="120" IsReadOnly="True"></DataGridTextColumn>
+                                <DataGridTextColumn Header="必填" Binding="{Binding Required,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"  Width="100" IsReadOnly="True"></DataGridTextColumn>
+                                <DataGridTextColumn Header="默认值" Binding="{Binding Default,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"  Width="150" IsReadOnly="True"></DataGridTextColumn>
+                                <DataGridTextColumn Header="约束" Binding="{Binding Constraint,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"  Width="100" IsReadOnly="True"></DataGridTextColumn>
+                                <DataGridTextColumn Header="字段说明" Binding="{Binding Remacks,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"  Width="350" IsReadOnly="True"></DataGridTextColumn>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </Grid>
+                    <Button Grid.Row="2" Name="Clear2" Content="清    除" Command="{Binding ClearCommand}"  CommandParameter="{Binding ElementName=RichTextBox}" VerticalAlignment="Center" HorizontalAlignment="Right" Width="100" Height="40" Margin="0,0,200,0"  FontSize="18" />
+                    <Button Grid.Row="2" Name="Commit2" Content="确    认"  Command="{Binding SubmitCommand}" CommandParameter="{Binding ElementName=RichTextBox}" VerticalAlignment="Center" HorizontalAlignment="Right" Width="100" Height="40" Margin="0,0,10,0" FontSize="18" />
+                </Grid>
 
             </TabItem>
         </TabControl>

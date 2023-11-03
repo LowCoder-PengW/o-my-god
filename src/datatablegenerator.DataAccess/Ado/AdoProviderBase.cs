@@ -1,15 +1,10 @@
-﻿using datatablegenerator.Models;
-using Microsoft.Identity.Client;
-using System;
-using System.Collections.Generic;
+﻿using datatablegenerator.Common;
+using datatablegenerator.Models;
 using System.Data;
 using System.Data.Common;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
 
-namespace datatablegenerator.Common.Ado
+
+namespace datatablegenerator.DataAccess.Ado
 {
     public abstract class AdoProviderBase
     {

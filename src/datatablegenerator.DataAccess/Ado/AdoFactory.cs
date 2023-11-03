@@ -1,12 +1,7 @@
-﻿using datatablegenerator.Common.Ado.Providers;
+﻿using datatablegenerator.DataAccess.Ado.Providers;
 using datatablegenerator.Enums;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace datatablegenerator.Common.Ado
+namespace datatablegenerator.DataAccess.Ado
 {
     public class AdoFactory
     {

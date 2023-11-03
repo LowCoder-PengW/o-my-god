@@ -1,5 +1,5 @@
 ﻿using System.Windows;
- 
+
 namespace datatablegenerator.Views
 {
     /// <summary>
@@ -11,8 +11,8 @@ namespace datatablegenerator.Views
         {
             InitializeComponent();
             this.DataContext = new ViewModels.MainWindowModel();
-        } 
- 
+        }
+
     }
-     
+
 }

@@ -4,7 +4,6 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Documents;
 
 namespace datatablegenerator.Models
 {
@@ -23,6 +22,24 @@ namespace datatablegenerator.Models
                 }
             }
         }
+
+
+
+        private string _ExcelPathName;
+        public string ExcelPathName
+        {
+            get { return _ExcelPathName; }
+            set
+            {
+                if (_ExcelPathName != value)
+                {
+                    _ExcelPathName = value;
+                    OnPropertyChanged(nameof(ExcelPathName));
+                }
+            }
+        }
+
+
 
 
         #region

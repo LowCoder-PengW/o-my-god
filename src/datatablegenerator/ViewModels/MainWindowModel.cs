@@ -1,16 +1,17 @@
 ﻿using datatablegenerator.Common;
-using datatablegenerator.Common.Ado;
 using datatablegenerator.Common.Utils;
+using datatablegenerator.DataAccess.Ado;
 using datatablegenerator.Enums;
 using datatablegenerator.Models;
+using Microsoft.Win32;
+using MiniExcelLibs;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Data;
-using System.IO;
+using System.Diagnostics;
 using System.Linq;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
@@ -56,7 +57,7 @@ namespace datatablegenerator.ViewModels
         /// 连接数据库
         /// </summary>
         /// <returns></returns>
-        public void ConnectionDB(object? commandParameter)
+        private void ConnectionDB(object? commandParameter)
         {
             var connectionString = GetConnectionString();
             _ConnectModel.DataBaseName = GetDatabaseName(connectionString);
@@ -67,10 +68,12 @@ namespace datatablegenerator.ViewModels
             {
                 MessageBox.Show("连接失败！", "提示", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
+
             }
             UpdateConnectStatus(isok);
             _adoProvider = provider;
             MessageBox.Show("连接成功！", "提示", MessageBoxButton.OK, MessageBoxImage.Information);
+
 
         }
 
@@ -229,7 +232,7 @@ namespace datatablegenerator.ViewModels
         /// 清除
         /// </summary>
         /// <param name="parameter"></param>
-        public void Clear(object parameter)
+        private void Clear(object parameter)
         {
             TextRange tr = new TextRange(((RichTextBox)parameter).Document.ContentStart, ((RichTextBox)parameter).Document.ContentEnd);
             tr.Text = string.Empty;
@@ -305,7 +308,7 @@ namespace datatablegenerator.ViewModels
             }
         }
 
-        public void CheckDB(object parameter)
+        private void CheckDB(object parameter)
         {
             if (_DBCheckModel.IsMySQL)
             {
@@ -316,6 +319,72 @@ namespace datatablegenerator.ViewModels
                 _ConnectModel.DBName = "Microsoft ® SQL Server";
             }
         }
+
+        #endregion
+
+
+        #region 选择文件
+
+        private ICommand? _OpenFileCommand;
+        public ICommand? OpenFileCommand
+        {
+            get
+            {
+                return _OpenFileCommand ?? (_OpenFileCommand = new RelayCommand<object>(OpenFile));
+            }
+        }
+        private void OpenFile(object parmeter)
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.Filter = "execl files (*.xls)|*.xlsx";
+            if (openFileDialog.ShowDialog() == true)
+            {
+                string selectedFilePath = openFileDialog.FileName;
+                _ExcelTemplateModel.ExcelPathName = selectedFilePath;
+            }
+        }
+
+        #endregion
+
+        #region Execl文件解析
+        /// <summary>
+        /// Execl文件解析 Command
+        /// </summary>
+        private ICommand? _ExcelPathAnalysisCommand;
+        public ICommand? ExcelPathAnalysisCommand
+        {
+            get
+            {
+                return _ExcelPathAnalysisCommand ?? (_ExcelPathAnalysisCommand = new RelayCommand<object>(ExcelPathAnalysis));
+            }
+        }
+
+        public void ExcelPathAnalysis(object parameter)
+        {
+            if (string.IsNullOrWhiteSpace(_ExcelTemplateModel.ExcelPathName))
+            {
+                MessageBox.Show("请先选择Excel文件！", "提示", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+                return;
+            }
+            var datas = MiniExcel.Query<ExcelPathModel>(_ExcelTemplateModel.ExcelPathName)
+                .Select(r => new TableModel
+                {
+                    Name = r.Name,
+                    Type = r.Type,
+                    Required = string.Equals(r.Required, "*") ? true : false,
+                    Default = r.Default,
+                    Constraint = r.Constraint,
+                    Remacks = r.Remacks,
+                })
+                .ToList(); 
+            
+            foreach (var item in datas)
+            {
+                TableModelList.Add(item);
+            } 
+
+        }
+
 
         #endregion
 
